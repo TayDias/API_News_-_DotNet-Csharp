@@ -1,27 +1,56 @@
-namespace aspnetapp5
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+using aspnetapp5.Infra;
+using aspnetapp5.Mappers;
+using aspnetapp5.Services;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
-
-
-/*
 var builder = WebApplication.CreateBuilder(args);
+
+
+// Add services to the container
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+});
+
+#region [Database]
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection(nameof(DatabaseSettings)));
+builder.Services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+#endregion
+
+#region [DI]
+builder.Services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+builder.Services.AddSingleton<NewsService>();
+#endregion
+
+#region [AutoMapper]
+builder.Services.AddAutoMapper(typeof(EntityToViewModelMapping), typeof(ViewModelToEntityMapping));
+#endregion
+
+#region [Cors]
+builder.Services.AddCors();
+#endregion
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+
+// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseCors(c => {
+    c.AllowAnyHeader();
+    c.AllowAnyMethod();
+    c.AllowAnyOrigin();
+});
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
-*/
