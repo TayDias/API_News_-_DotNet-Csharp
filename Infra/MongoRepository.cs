@@ -23,10 +23,10 @@ namespace aspnetapp5.Infra
 
             _model = database.GetCollection<T>(typeof(T).Name.ToLower());
         }
-        public List<T> Get() => _model.Find(active => true).ToList();
+        public List<T> Get() => _model.Find(news => news.Deleted == false).ToList();
 
         public T Get(string id) =>
-            _model.Find<T>(news => news.Id == id).FirstOrDefault();
+            _model.Find<T>(news => news.Id == id && news.Deleted == false).FirstOrDefault();
 
         public T Create(T news)
         {
@@ -36,6 +36,13 @@ namespace aspnetapp5.Infra
 
         public void Update(string id, T newsIn) => _model.ReplaceOne(news => news.Id == id, newsIn);
 
-        public void Remove(string id) => _model.DeleteOne(news => news.Id == id);
+        // Old
+        // public void Remove(string id) => _model.DeleteOne(news => news.Id == id);
+
+        public void Remove(string id) {     
+            var newsIn = Get(id);
+            newsIn.Deleted = true;
+            _model.ReplaceOne(news => news.Id == id, newsIn);
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace aspnetapp5.Controllers
 
             _newsService.Remove(news.Id);
 
-            return Ok("Deletado com sucesso!");
+            return Ok(new { message = "Deletado com sucesso!" });
         }
     }
 }
