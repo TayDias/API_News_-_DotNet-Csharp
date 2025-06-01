@@ -1,6 +1,7 @@
 using aspnetapp5.Infra;
 using aspnetapp5.Mappers;
 using aspnetapp5.Services;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
@@ -43,11 +44,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+#region [Cors]
 app.UseCors(c => {
     c.AllowAnyHeader();
     c.AllowAnyMethod();
     c.AllowAnyOrigin();
 });
+#endregion
+
+#region [StaticFiles]
+app.UseStaticFiles(new StaticFileOptions{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "Imagens")),
+    RequestPath = "/imgs"
+});
+#endregion
 
 app.UseAuthorization();
 

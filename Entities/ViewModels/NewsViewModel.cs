@@ -19,5 +19,7 @@ namespace aspnetapp5.Entities.ViewModels
         public string Link { get; set; }
 
         public Status Status { get; set; }
+
+        public DateTime PublishDate { get; set; }
     }
 }

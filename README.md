@@ -2,6 +2,8 @@
 
 <p>[Em desenvolvimento] Projeto desenvolvido em acompanhamento ao curso da Udemy "Aprenda nesse curso como desenvolver uma API RESTful do zero com .NET, MongoDB, Redis e Docker". O objetivo foi estudar o uso de .NET, Docker e MongoDB para construir uma API. O Resultado esperado é um CRUD "Dockerizado" persistindo no MongoDB.</p>
 
+<p>[Frontend em Angular](), usado junto ao projeto [TODO].</p>
+
 
 # Índice
 
@@ -24,6 +26,7 @@
 - [Docker](https://docs.docker.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [AutoMapper](https://automapper.org/)
+- [ImageProcessor](https://jimbobsquarepants.github.io/ImageProcessor/)
 
 
 # Conceitos trabalhados
@@ -33,11 +36,11 @@
 * Arquitetura básica e injeção de dependencias no .NET
 * Trabalhar com AutoMapper
 * Validar os endpoints através do Swagger
+* Upload e compressão de imagens
+* Angular para o frontend [TODO]
 * Autenticação com JWT [TODO]
 * Testes unitários em uma aplicação .NET [TODO]
-* Upload de imagens [TODO]
 * HealthCheck para o app [TODO]
-* Angular para o frontend [TODO]
 * Redis para Cache em memoria [TODO]
 
 
@@ -45,10 +48,42 @@
 
 ## Pré-requisitos
 
-## Instalação
+- **.NET SDK** versão 6 ou superior;
+- **Docker** Engine ou Desktop;
 
-## Manipulando dados
+## Usando a API
 
+1. Faça o clone do repositório e no terminal navegue até a pasta.
+2. Para iniciar o server local usando o VSCode, execute o comando `dotnet run`.
+3. Para acessar o server basta copiar o endereço obtido no terminal, incluir `/swagger/index.html`, e abrir no navegador web. Exemplo: `http://localhost:5130/swagger/index.html`.
+4. Para testar o CRUD, configure o banco de dados MongoDB seguindo os passos do tópico abaixo, [Usando o MongoDB com imagem Docker](#usando-o-mongodb-com-imagem-docker).
+
+
+## Usando o MongoDB com imagem Docker
+
+### Configurando o MongoDB com Docker no PC pela primeira vez
+
+* Download da imagem
+    docker pull mongo
+
+* Criação do container a partir da imagem baixada
+    docker run --name mongodb -p 27017:27017 -e AUTH=no mongo
+
+- [Mais sobre a imagem](https://hub.docker.com/_/mongo)
+
+
+### Iniciando o container MongoDB criado (caso inativo)
+
+* Consultar containers (ativos e inativos) 
+    docker ps -a
+
+* Iniciar o container
+    docker start ID_CONTAINER
+
+
+## Gerenciamento de dados usando MongoDB
+
+[TODO]
 
 # Referências
 
@@ -69,3 +104,9 @@ https://docs.docker.com/desktop/setup/install/linux/
 
 Enable snaps on Debian and install robo3t-snap:
 https://snapcraft.io/install/robo3t-snap/debian#install
+
+DI (Dependency Injection):
+https://github.com/LuanRoger/AllInOneAspNet#di-dependency-injection
+
+ImageFactory is generating .webp file that is larger than .jpeg file:
+https://stackoverflow.com/questions/60233979/imagefactory-is-generating-webp-file-that-is-larger-than-jpeg-file

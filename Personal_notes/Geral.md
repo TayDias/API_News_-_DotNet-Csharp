@@ -84,6 +84,9 @@ https://docs.docker.com/desktop/setup/install/linux/
 * AutoMapper: dotnet add package AutoMapper
 * MongoDB Driver: dotnet add package MongoDB.Driver
 * MongoDB Bson: dotnet add package MongoDB.Bson
+* System.Drawing.Common: dotnet add package System.Drawing.Common --version 6.0.0
+* ImageProcessor: dotnet add package ImageProcessor --version 2.9.1
+* ImageProcessorNet.Plugins.WebP: dotnet add package ImageProcessor.Plugins.WebP --version 1.3.0
 
 
 # Manuseando o Banco de Dados Mongo
